@@ -1,0 +1,40 @@
+@font-face {
+    font-family: 'creato';
+    src: url('../font/CreatoDisplay-Regular.woff2') format('woff2');
+    font-weight: 400;
+}
+@font-face {
+    font-family: 'creato';
+    src: url('../font/CreatoDisplay-Medium.woff2') format('woff2');
+    font-weight: 500;
+}
+@font-face {
+    font-family: 'creato';
+    src: url('../font/CreatoDisplay-Bold.woff2') format('woff2');
+    font-weight: 700;
+}
+@font-face {
+    font-family: 'pre';
+    src: url('../font/Pretendard-Light.woff2') format('woff2');
+    font-weight: 300;
+}
+@font-face {
+    font-family: 'pre';
+    src: url('../font/Pretendard-Regular.woff2') format('woff2');
+    font-weight: 400;
+}
+@font-face {
+    font-family: 'pre';
+    src: url('../font/Pretendard-Medium.woff2') format('woff2');
+    font-weight: 500;
+}
+@font-face {
+    font-family: 'pre';
+    src: url('../font/Pretendard-SemiBold.woff2') format('woff2');
+    font-weight: 600;
+}
+@font-face {
+    font-family: 'pre';
+    src: url('../font/Pretendard-Bold.woff2') format('woff2');
+    font-weight: 700;
+}

@@ -1,0 +1,149 @@
+@import './font.css';
+@import './common.css';
+@import './reset.css';
+
+#header {
+   position: fixed;
+   top: 0;
+   left: 0;
+   z-index: 999;
+   width: 100vw;
+  height: auto;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 30px 60px;
+ } 
+ 
+ #header .logo a{
+  width: 120px;
+  height: auto;
+ }
+
+#header .contact-wrap{
+
+
+     background: transparent;
+   border: 1.5px solid #fff;
+   border-radius: 30px;
+   padding: 2px 25px;
+   z-index: 99;
+
+  }
+  #header .btn-contact{
+   width: 100%;
+   height: 100%;
+
+  }
+ 
+
+
+
+
+#footer{
+
+   position: relative;
+}
+
+
+#footer .inner{
+
+ padding-top: 150px;
+}
+
+#footer .title{
+margin-bottom: 20px;
+   font-size: calc(var(--title-size) * 0.35);
+   font-weight: 700;
+   z-index: 20;
+  
+}
+
+
+#footer .name {
+
+font-size: clamp(7em, 12.5vw, 22.5em);
+   font-weight: 700;
+}
+
+
+#footer .bg {
+   position: absolute;
+   top: 0%;
+   bottom: 0%;
+   left: 0%;
+   right: 0%;
+}
+#footer .bg-inner {
+   width: 100%;
+ height: 100vh;
+ opacity: 0.15;
+}
+#footer .contact{
+   display: flex;
+   flex-direction: column;
+   margin-bottom: 90px;
+}
+#footer .contact a{
+   font-size: 23px;
+   font-weight: 500;
+}
+
+#footer .bg-inner video {
+   width: 100%;
+   height: 100%;
+   -o-object-fit: cover;
+   object-fit: cover;
+   
+}
+
+#footer .footer-bottom{
+
+   z-index: 99;
+   display: flex;
+   justify-content: space-between;
+
+} 
+
+#footer .footer-bottom .velog{
+   z-index: 10; 
+  position: relative; 
+}
+#footer .footer-bottom .by{
+   text-align: right;
+}
+
+
+        /* 1040이하~ 768px [1024px] */
+        @media (max-width:1040px) {
+         #footer .footer-bottom{
+          display: grid;
+          grid-template-columns: repeat(2,1fr);
+          gap: 3em 1.5em;
+            
+         }
+        
+     }
+     
+     
+     
+     
+     /* 767px ~ 320px  [320px]*/
+     @media (max-width:750px) {
+      #header {
+         padding: 30px 20px;
+      }
+           #footer .name {
+           font-size: 50px;
+            font-weight: 700;
+        }
+        #footer .contact{
+         display: flex;
+         flex-direction: column;
+         margin-bottom: 230px;
+         
+      }
+
+    
+     
+     }

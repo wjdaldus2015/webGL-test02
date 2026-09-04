@@ -1,0 +1,81 @@
+
+:root {
+   
+   --color-dark-rgb: 24, 24, 26;
+   --color-dark: rgba(var(--color-dark-rgb), 1);
+   --color-light-rgb: 255, 255, 255;
+   --color-light: rgba(var(--color-light-rgb), 1);
+   --color-white: #FFFFFF;
+   --color-black-rgb: 0, 0, 0;
+   --color-black: rgba(var(--color-black-rgb), 1);
+   /* 포인트 컬러는 히어로 배경 셰이더가 쓰는 파랑과 같은 값이다 */
+   --color-primary: #005CA7;
+   --color-primary-dark: #003c6d;
+   --color-gray: #828282;
+   --color-darkgray-rgb: 30, 30, 32;
+   --color-darkgray: rgba(var(--color-darkgray-rgb), 1);
+   --color-lightgray: #e4e4e4;
+   
+   --color-border: rgba(var(--color-dark-rgb), 0.2);
+   --color-border-light: rgba(var(--color-light-rgb), 0.25);
+   
+   --color-text: rgba(var(--color-dark-rgb), 0.7);
+   --color-text-light: rgba(var(--color-light-rgb), 0.7);
+
+   --color-alert-error: #ff213e;
+   --color-alert-success: var(--color-primary);
+
+   --animation-primary: 0.4s cubic-bezier(.75, 0, .25, 1);
+   --animation-primary: 0.4s cubic-bezier(0.5, 0.75, 0, 1);
+   --animation-thumb: 0.4s cubic-bezier(0.5, 0, .25, 1);
+   --animation-smooth: 0.7s cubic-bezier(0.5, 0.5, 0, 1);
+
+   --section-padding-big: min(10vw, 10em);
+   --section-padding: min(8vw, 8em);
+   --section-padding-medium: min(6vw, 6em);
+   --section-padding-small: min(3.5vw, 3.5em);
+   --container-padding: min(4vw, 4em);
+   /* --container-padding: min(6vw, 6em); */
+   --gap-padding: min(4vw, 4em);
+
+   --title-size: clamp(5em, 7.5vw, 7.5em);
+   --border-radius: 4vh;   
+  
+}
+
+
+
+
+*{margin:0;padding:0;font:inherit;color:inherit;}
+*, :after, :before {box-sizing:border-box;}
+:root {-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;text-size-adjust:100%;cursor:default;line-height:1.5;overflow-wrap:break-word;-moz-tab-size:4;tab-size:4}
+html, body {height:100%;}
+img, picture, video, canvas, svg {display: block;max-width:100%;}
+button {background:none;border:0;cursor:pointer;}
+a {text-decoration:none}
+table {border-collapse:collapse;border-spacing:0}
+ul{list-style: none;}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    font-family: 'creato','pre',sans-serif;
+    color: var(--color-text-light);
+    line-height: 1.6;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    font-size: clamp(16px, 1.2vw, 19px);
+    background-color: var(--color-dark);
+    overflow-x: hidden;
+ 
+ 
+ }
+
+
+ html, body {
+    width: 100%;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+    background-color: var(--color-dark);
+    color: #FFFFFF;
+ }

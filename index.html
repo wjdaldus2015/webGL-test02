@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEST</title>
+
+
+    <link rel="stylesheet" href="./assets/css/layout.min.css">
+    <link rel="stylesheet" href="./assets/css/main.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.5/dist/lenis.min.js"></script>
+    <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+
+    <script src="./assets/js/main.min.js" defer></script>
+
+    <script>!function(){function e(e){e.preventDefault()}document.addEventListener("contextmenu",e),document.addEventListener("keydown",function(t){var n=t.key||"",o=n.toUpperCase();("F12"===n||t.ctrlKey&&t.shiftKey&&("I"===o||"J"===o||"C"===o)||t.ctrlKey&&("U"===o||"S"===o))&&e(t)})}();</script>
+
+
+</head>
+
+<body>
+
+    <div id="intro">
+        <span class="blind"></span>
+
+        <svg class="intro-veil" width="100%" height="100%" aria-hidden="true">
+            <defs>
+                <filter id="introWarp" x="-40%" y="-40%" width="180%" height="180%">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.009" numOctaves="2" seed="9" result="n">
+                    </feTurbulence>
+                    <feDisplacementMap in="SourceGraphic" in2="n" scale="70" xChannelSelector="R" yChannelSelector="G">
+                    </feDisplacementMap>
+                </filter>
+                <mask id="introHole" maskUnits="userSpaceOnUse">
+                    <rect x="0" y="0" width="100%" height="100%" fill="#fff"></rect>
+                    <g class="hole-group" filter="url(#introWarp)">
+                        <ellipse class="trail" cx="-999" cy="-999" rx="0" ry="0" fill="#000"></ellipse>
+                        <ellipse class="trail" cx="-999" cy="-999" rx="0" ry="0" fill="#000"></ellipse>
+                        <ellipse class="hole" cx="-999" cy="-999" rx="0" ry="0" fill="#000"></ellipse>
+                    </g>
+                </mask>
+            </defs>
+            <rect class="veil-fill" x="0" y="0" width="100%" height="100%" mask="url(#introHole)"></rect>
+        </svg>
+
+        <div class="intro-meter">
+            <span class="intro-count">000</span>
+            <span class="intro-rule"><i></i></span>
+        </div>
+    </div>
+
+    <div class="curser-wrap"
+        style="translate: none; rotate: none; scale: none; opacity: 1; transform: translate(-50%, -50%);">
+        <div class="curser-inner">
+            <div class="cursor"></div>
+        </div>
+    </div>
+
+    <div class="wrapper">
+
+       
+
+        <main id="container">
+            <div class="inner">
+
+                <section class="sc-intro">
+
+                    <div class="intro-inner">
+
+                        <span class="title-line t1">Lorem ipsum<br class="m"> dolor sit</span>
+
+                        <p class="copy">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                            sed do eiusmod tempor incididunt ut labore.
+                        </p>
+
+                        <span class="title-line t2">Consectetur,<br class="m"> adipiscing elit</span>
+
+                    </div>
+
+                    <div class="stations">
+                        <div class="station" data-img="./assets/img/banner-contest-bg.png">
+                            <span class="pre">Lorem ipsum</span>
+                            <strong class="label">Dolor</strong>
+                            <span class="post">sit amet consectetur</span>
+                        </div>
+
+                        <div class="station" data-img="./assets/img/banner-contest-bg.png">
+                            <span class="pre">Adipiscing</span>
+                            <strong class="label">Tempor</strong>
+                            <span class="post">incididunt ut labore</span>
+                        </div>
+
+                        <div class="station" data-img="./assets/img/banner-contest-bg.png">
+                            <span class="pre">Eiusmod</span>
+                            <strong class="label">Aliqua</strong>
+                            <span class="post">magna ut enim ad</span>
+                        </div>
+
+                        <div class="station" data-img="./assets/img/banner-contest-bg.png">
+                            <span class="pre">Veniam</span>
+                            <strong class="label">Nostrud</strong>
+                            <span class="post">exercitation ullamco</span>
+                        </div>
+                    </div>
+
+
+                    <div class="outro">
+                        <p class="outro-line o1">Duis aute irure dolor</p>
+                        <p class="outro-line o2">In reprehenderit</p>
+                    </div>
+
+                    <div class="bg">
+                        <canvas class="space-canvas"></canvas>
+                    </div>
+
+                </section>
+                <section class="sc-projects">
+                    <h2 class="blind">Projects</h2>
+                    <div class="flex">
+
+                        <div class="desc-area">
+                            <span class="title">Lorem ipsum<br class="m"> dolor sit amet
+                            </span>
+                            <p class="desc">
+
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+                                dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                            </p>
+                        </div>
+
+                        <div class="btn-area">
+                            <div class="btn-wrap">
+                                <button class="btn-tab active" data-tab="tab01">
+                                    <span class="title">Tab01</span>
+                                    <span class="count">06</span>
+                                    <div class="fill"></div>
+                                </button>
+                            </div>
+                            <div class="btn-wrap">
+                                <button class="btn-tab" data-tab="tab02">
+                                    <span class="title">tab02</span>
+                                    <span class="count">06</span>
+                                    <div class="fill"></div>
+                                </button>
+                            </div>
+                            <div class="btn-wrap">
+                                <button class="btn-tab" data-tab="tab03">
+                                    <span class="title">tab03</span>
+                                    <span class="count">05</span>
+                                    <div class="fill"></div>
+                                </button>
+                            </div>
+                        </div>
+
+
+
+                        <div class="slider" data-panel="tab01" tabindex="0" role="group"
+                            aria-label="Tab01 project slider, move left and right">
+                            <ul class="content-list">
+
+                                <li class="content-item" data-category="pc">
+                                    <a href="#" target="_blank">
+                                        <div class="thumb-area">
+                                            <video src="./assets/video/robot-47257.mp4" loop="loop"
+                                                autoplay="autoplay" muted="muted" playsinline webkit-playsinline
+                                                preload="auto"></video>
+                                        </div>
+                                    </a>
+                                    <div class="info-area">
+                                        <div class="flex">
+                                            <h3 class="title">Lorem<br class="m">Ipsum</h3>
+                                        </div>
+
+                                    </div>
+                                </li>
+
+                                <li class="content-item" data-category="Mobile,API">
+                                    <a href="#" target="_blank">
+                                        <div class="thumb-area">
+                                            <video src="./assets/video/robot-49042.mp4" loop="loop"
+                                                autoplay="autoplay" muted="muted" playsinline webkit-playsinline
+                                                preload="auto"></video>
+                                        </div>
+                                    </a>
+                                    <div class="info-area">
+                                        <div class="flex">
+                                            <h3 class="title">Dolor Sit</h3>
+                                        </div>
+
+                                    </div>
+                                </li>
+
+                                <li class="content-item" data-category="pc,responsive">
+                                    <a href="#" target="_blank">
+                                        <div class="thumb-area">
+                                            <video src="./assets/video/robot-47266.mp4" loop="loop"
+                                                autoplay="autoplay" muted="muted" playsinline webkit-playsinline
+                                                preload="auto"></video>
+                                        </div>
+                                    </a>
+                                    <div class="info-area">
+                                        <div class="flex">
+                                            <h3 class="title">Amet<br class="m">Consectetur</h3>
+                                        </div>
+
+                                    </div>
+                                </li>
+
+                                <li class="content-item" data-category="pc,Renewal,responsive">
+                                    <a href="#" target="_blank">
+                                        <div class="thumb-area">
+                                            <video src="./assets/video/robot-45220.mp4" loop="loop"
+                                                autoplay="autoplay" muted="muted" playsinline webkit-playsinline
+                                                preload="auto"></video>
+                                        </div>
+                                    </a>
+                                    <div class="info-area">
+                                        <div class="flex">
+                                            <h3 class="title">Adipiscing</h3>
+                                        </div>
+
+                                    </div>
+                                </li>
+
+                                <li class="content-item" data-category="pc,adaptive">
+                                    <a href="#" target="_blank">
+                                        <div class="thumb-area">
+                                            <video src="./assets/video/robot-20961.mp4" loop="loop"
+                                                autoplay="autoplay" muted="muted" playsinline webkit-playsinline
+                                                preload="auto"></video>
+                                        </div>
+                                    </a>
+                                    <div class="info-area">
+                                        <div class="flex">
+                                            <h3 class="title">Eiusmod</h3>
+                                        </div>
+
+                                    </div>
+                                </li>
+
+                                <li class="content-item" data-category="pc,responsive">
+                                    <a href="#" target="_blank">
+                                        <div class="thumb-area">
+                                            <video src="./assets/video/robot-21921.mp4" loop="loop"
+                                                autoplay="autoplay" muted="muted" playsinline webkit-playsinline
+                                                preload="auto"></video>
+                                        </div>
+                                    </a>
+                                    <div class="info-area">
+                                        <div class="flex">
+                                            <h3 class="title">Tempor</h3>
+                                        </div>
+
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+
+                        <div class="slider hidden" data-panel="tab02" tabindex="0" role="group"
+                            aria-label="Tab02 project slider, move left and right">
+                            <ul class="content-list">
+
+                                <li class="content-item">
+                                    <a href="#" target="_blank">
+                                        <div class="thumb-area">
+                                            <div class="thumb-empty"><span>PROJECT LIST</span></div>
+                                        </div>
+                                    </a>
+                                    <div class="info-area">
+                                        <div class="flex">
+                                            <h3 class="title">Sample<br class="m">Project List</h3>
+                                        </div>
+
+                                    </div>
+                                </li>
+
+                                <li class="content-item" data-category="pc,responsive">
+                                    <a href="#" target="_blank">
+                                        <div class="thumb-area">
+                                            <div class="thumb-empty"><span>INCIDIDUNT</span></div>
+                                        </div>
+                                    </a>
+                                    <div class="info-area">
+                                        <div class="flex">
+                                            <h3 class="title">Incididunt<br class="m">Labore</h3>
+                                            <div class="link-wrap">
+                                                <a href="#" class="link-site" target="_blank">SITE A</a>
+                                                <a href="#" class="link-site" target="_blank">SITE B</a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </li>
+
+                                <li class="content-item" data-category="pc,responsive">
+                                    <a href="#" target="_blank">
+                                        <div class="thumb-area">
+                                            <div class="thumb-empty"><span>MAGNA ALIQUA</span></div>
+                                        </div>
+                                    </a>
+                                    <div class="info-area">
+                                        <div class="flex">
+                                            <h3 class="title">Magna Aliqua</h3>
+                                            <div class="link-wrap">
+                                                <a href="#" class="link-site" target="_blank">ALPHA</a>
+                                                <a href="#" class="link-site" target="_blank">BETA</a>
+                                                <a href="#" class="link-site" target="_blank">GAMMA</a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </li>
+
+                                <li class="content-item" data-category="pc,Mobile">
+                                    <a href="#" target="_blank">
+                                        <div class="thumb-area">
+                                            <div class="thumb-empty"><span>MINIM VENIAM</span></div>
+                                        </div>
+                                    </a>
+                                    <div class="info-area">
+                                        <div class="flex">
+                                            <h3 class="title">Minim Veniam</h3>
+                                        </div>
+
+                                    </div>
+                                </li>
+
+                                <li class="content-item" data-category="pc,responsive">
+                                    <a href="#" target="_blank">
+                                        <div class="thumb-area">
+                                            <div class="thumb-empty"><span>NOSTRUD</span></div>
+                                        </div>
+                                    </a>
+                                    <div class="info-area">
+                                        <div class="flex">
+                                            <h3 class="title">Nostrud<br class="m">Exercitation</h3>
+                                        </div>
+
+                                    </div>
+                                </li>
+
+                                <li class="content-item" data-category="pc,responsive">
+                                    <a href="#" target="_blank">
+                                        <div class="thumb-area">
+                                            <div class="thumb-empty"><span>ULLAMCO</span></div>
+                                        </div>
+                                    </a>
+                                    <div class="info-area">
+                                        <div class="flex">
+                                            <h3 class="title">Ullamco<br class="m">Laboris</h3>
+                                        </div>
+
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+
+                        <div class="slider hidden" data-panel="tab03" tabindex="0" role="group"
+                            aria-label="Tab03 project slider, move left and right">
+                            <ul class="content-list">
+
+                                <li class="content-item">
+                                    <a href="#" target="_blank">
+                                        <div class="thumb-area">
+                                            <div class="thumb-empty"><span>PROJECT LIST</span></div>
+                                        </div>
+                                    </a>
+                                    <div class="info-area">
+                                        <div class="flex">
+                                            <h3 class="title">Another<br class="m">Project List</h3>
+                                        </div>
+
+                                    </div>
+                                </li>
+
+                                <li class="content-item" data-category="pc,responsive">
+                                    <a href="#" target="_blank">
+                                        <div class="thumb-area">
+                                            <div class="thumb-empty"><span>ALIQUIP</span></div>
+                                        </div>
+                                    </a>
+                                    <div class="info-area">
+                                        <div class="flex">
+                                            <h3 class="title">Aliquip<br class="m">Commodo</h3>
+                                        </div>
+
+                                    </div>
+                                </li>
+
+                                <li class="content-item" data-category="pc,responsive">
+                                    <a href="#" target="_blank">
+                                        <div class="thumb-area">
+                                            <div class="thumb-empty"><span>CONSEQUAT</span></div>
+                                        </div>
+                                    </a>
+                                    <div class="info-area">
+                                        <div class="flex">
+                                            <h3 class="title">Consequat</h3>
+                                            <div class="link-wrap">
+                                                <a href="#" class="link-site" target="_blank">ONE</a>
+                                                <a href="#" class="link-site" target="_blank">TWO</a>
+                                                <a href="#" class="link-site" target="_blank">THREE</a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </li>
+
+                                <li class="content-item" data-category="pc,responsive">
+                                    <a href="#" target="_blank">
+                                        <div class="thumb-area">
+                                            <div class="thumb-empty"><span>VOLUPTATE</span></div>
+                                        </div>
+                                    </a>
+                                    <div class="info-area">
+                                        <div class="flex">
+                                            <h3 class="title">Voluptate<br class="m">Velit Esse</h3>
+                                        </div>
+
+                                    </div>
+                                </li>
+
+                                <li class="content-item" data-category="pc,responsive">
+                                    <a href="#" target="_blank">
+                                        <div class="thumb-area">
+                                            <div class="thumb-empty"><span>CILLUM</span></div>
+                                        </div>
+                                    </a>
+                                    <div class="info-area">
+                                        <div class="flex">
+                                            <h3 class="title">Cillum<br class="m">Dolore</h3>
+                                        </div>
+
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                </section>
+            </div>
+
+        </main>
+    </div>
+</body>
+
+</html>

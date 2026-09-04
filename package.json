@@ -1,0 +1,15 @@
+{
+  "name": "webgl-test",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build:css": "cleancss -O2 --output assets/css/layout.min.css assets/css/layout.css && cleancss -O2 --output assets/css/main.min.css assets/css/main.css",
+    "build:js": "terser assets/js/main.js --compress --mangle --output assets/js/main.min.js && javascript-obfuscator assets/js/main.min.js --output assets/js/main.min.js --compact true --identifier-names-generator hexadecimal --string-array true --string-array-threshold 0.75 --string-array-encoding base64 --string-array-wrappers-count 2 --self-defending true --numbers-to-expressions true --simplify true --control-flow-flattening false --dead-code-injection false --debug-protection false",
+    "build": "npm run build:css && npm run build:js"
+  },
+  "devDependencies": {
+    "clean-css-cli": "^5.6.3",
+    "javascript-obfuscator": "^5.6.0",
+    "terser": "^5.31.6"
+  }
+}

@@ -1,0 +1,83 @@
+.blind{
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    margin: -1px;
+}
+.wrapper{
+   
+    min-width:320px;
+
+}
+
+.inner{
+    padding: 0 60px;
+    margin: 0 auto;
+   
+   
+}
+
+.headline{
+    font-size: calc(var(--title-size)* 0.75);
+    line-height: 0.95;
+}
+
+
+ .curser-wrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 7777;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .curser-wrap .curser-inner .cursor {
+    position: relative;
+    z-index: 2;
+    width: 1em;
+    height: 1em;
+    background-color: var(--color-primary);
+    border-radius: 3em;
+  }
+
+  /* 마우스가 없는 기기에서는 커서를 따라갈 대상이 없어 화면 구석에 점만 남는다 */
+  @media (hover: none), (pointer: coarse) {
+    .curser-wrap {
+      display: none;
+    }
+  }
+
+ 
+
+        /* 1040이하~ 768px [1024px] */
+@media (max-width:1040px) {
+    
+    .inner{
+        max-width: 1440px;
+        padding: 0 40px;
+        margin: 0 auto;
+        
+       
+       
+    }
+}
+
+/* 767px ~ 320px  [320px]*/
+@media (max-width:750px) {
+ 
+    .inner{
+       
+        padding: 0 20px;
+        margin: 0 auto;
+       
+       
+    }
+
+    
+}
+
+
+
+        

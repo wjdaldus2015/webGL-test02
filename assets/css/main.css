@@ -1,0 +1,961 @@
+/* 인트로 로딩 중과 히어로 영역에서는 보라 점 커서를 감춘다 */
+.curser-wrap.is-hidden,
+html.is-intro .curser-wrap{
+    opacity: 0 !important;
+}
+
+/* ===== 인트로 로딩 화면 ===== */
+#intro{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
+    cursor: none;
+}
+html.is-intro,
+html.is-intro body{
+    overflow: hidden;
+}
+
+/* 화면을 덮는 막 - 커서 자리만 뚫려 있다 */
+#intro .intro-veil{
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+}
+#intro .veil-fill{
+    fill: #08090c;
+}
+
+/* 진행 표시 - 화면 좌하단 격자에 고정된 얇은 눈금 */
+#intro .intro-meter{
+    position: absolute;
+    left: 40px;
+    bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    pointer-events: none;
+}
+#intro .intro-count{
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: .26em;
+    font-variant-numeric: tabular-nums;
+    color: rgba(var(--color-light-rgb), 0.55);
+}
+#intro .intro-rule{
+    display: block;
+    width: 200px;
+    height: 1px;
+    background-color: rgba(var(--color-light-rgb), 0.16);
+}
+#intro .intro-rule i{
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-primary);
+    transform: scaleX(0);
+    transform-origin: left center;
+}
+
+@media (max-width: 750px){
+    #intro .intro-meter{
+        left: 24px;
+        bottom: 26px;
+        gap: 12px;
+    }
+    #intro .intro-rule{ width: 120px; }
+}
+
+
+
+.sc-intro{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+}
+
+/* 스크롤 고정(pin) 이 걸리면 .sc-intro 가 position:fixed 가 되어 이 배경의 기준이 된다.
+   그러면 inner 패딩만큼 좁아지므로 화면 폭으로 되돌린다 */
+.sc-intro .bg {
+    position: absolute;
+    top: 0%;
+    bottom: 0%;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background-color: #08090c;
+}
+
+.sc-intro .space-canvas{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* 참고 사이트와 같은 배치 - 라벨과 첫 줄은 위, 설명은 가운데, 둘째 줄은 아래 오른쪽 */
+.sc-intro .intro-inner{
+    position: relative;
+    z-index: 500;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    height: 100%;
+    /* 위쪽은 고정 헤더(MY LOG / CONTACT) 아래로 내려야 라벨이 겹치지 않는다 */
+    padding: 96px 0 4vh;
+    text-align: left;
+}
+
+/* 섹션 마커 - ( I. ) 형태의 작은 라벨 */
+.sc-intro .eyebrow{
+    display: flex;
+    align-items: center;
+    margin-bottom: 24px;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: rgba(var(--color-light-rgb), 0.45);
+}
+.sc-intro .eyebrow i{
+    display: block;
+    width: 46px;
+    height: 1px;
+    margin: 0 14px;
+    background-color: rgba(var(--color-light-rgb), 0.25);
+}
+
+/* 큰 제목 두 줄 - 첫 줄은 왼쪽 위, 둘째 줄은 오른쪽 아래에 걸린다.
+   difference 합성이라 어두운 하늘 위에서는 흰 글자, 밝은 지면 위에서는 보색으로 뒤집힌다 */
+.sc-intro .title-line{
+    display: block;
+    font-size: 12vw;
+    line-height: 0.86;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    color: #dfe6e8;
+    mix-blend-mode: difference;
+}
+.sc-intro .title-line.t2{
+    text-align: right;
+}
+/* <br> 로 끊은 줄 */
+.sc-intro .title-line .row{
+    display: block;
+}
+/* 스크롤에 맞춰 가로로 움직이는 상자. 글자 폭만큼만 차지해야 이동량을 잴 수 있다 */
+.sc-intro .title-line .move{
+    display: inline-block;
+    will-change: transform;
+}
+
+/* 가운데 설명문 */
+.sc-intro .copy{
+    max-width: 560px;
+    margin: 0 auto;
+    font-size: 14px;
+    line-height: 1.4;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+    text-align: center;
+    color: #dfe6e8;
+    mix-blend-mode: difference;
+}
+.sc-intro .copy .word{
+    display: inline-block;
+    white-space: nowrap;
+}
+
+/* 구간 문구 - 파티클이 만든 숫자 아래에 겹쳐 놓는다.
+   글자는 JS 가 마스크에 담아 하나씩 올려 보낸다 */
+.sc-intro .stations{
+    position: absolute;
+    inset: 0;
+    z-index: 400;
+    pointer-events: none;
+}
+.sc-intro .station{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 60%;
+    text-align: center;
+    /* 아래 .post 가 em 으로 따라오도록 기준 크기를 여기서 잡는다 */
+    font-size: 8vw;
+    color: var(--color-light);
+}
+.sc-intro .station .pre{
+    display: block;
+    margin-bottom: 56px;
+    font-size: 18px;
+    line-height: 1;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+    color: #bababa;
+}
+.sc-intro .station .label{
+    display: block;
+    font-size: 1em;
+    line-height: 1;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+}
+.sc-intro .station .post{
+    display: block;
+    margin-top: 16px;
+    font-size: 0.32em;
+    line-height: 1;
+    color: #bababa;
+}
+/* 글자 한 칸 - 넘치는 부분을 잘라 아래에서 올라오고 위로 빠지게 만든다.
+   히어로 문구와 구간 문구가 같은 칸을 쓴다 */
+.sc-intro .cell{
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+    line-height: 1;
+    padding-bottom: 0.22em;
+    margin-bottom: -0.22em;
+}
+.sc-intro .cell i{
+    display: inline-block;
+    font-style: normal;
+    white-space: pre;
+    transform: translateY(110%);
+    opacity: 0;
+    /* 글자 순번(--i)에 간격(--cell-step)을 곱해 차례로 올라온다.
+       스크롤이 빠를 때는 JS 가 두 값을 줄여 짧은 구간에서도 문구가 끝까지 나오게 한다 */
+    transition: transform var(--cell-dur, 700ms) cubic-bezier(0.22, 1, 0.36, 1),
+                opacity var(--cell-dur, 700ms) ease;
+    transition-delay: calc(var(--i, 0) * var(--cell-step, 35ms));
+}
+.sc-intro .station.is-on .cell i{
+    transform: translateY(0);
+    opacity: 1;
+}
+/* 히어로 문구는 들어올 땐 아래에서, 파고들면 위로 빠진다 */
+.sc-intro .intro-inner.is-in .cell i{
+    transform: translateY(0);
+    opacity: 1;
+}
+.sc-intro .intro-inner.is-above .cell i{
+    transform: translateY(-110%);
+    opacity: 0;
+}
+.sc-intro .copy .cell{
+    line-height: 1.25;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+/* 마무리 문구 - 두 줄을 같은 칸에 겹쳐 두고 차례로 교체한다 */
+.sc-intro .outro{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 46%;
+    z-index: 400;
+    display: grid;
+    transform: translateY(-50%);
+    pointer-events: none;
+    text-align: center;
+}
+.sc-intro .outro-line{
+    grid-area: 1 / 1;
+    margin: 0;
+    font-size: 8vw;
+    line-height: 1;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: #dfe6e8;
+}
+.sc-intro .outro-line .word{
+    display: inline-block;
+    white-space: nowrap;
+}
+.sc-intro .outro-line.is-on .cell i{
+    transform: translateY(0);
+    opacity: 1;
+}
+/* 다음 문구로 넘어갈 때는 위로 빠진다 */
+.sc-intro .outro-line.is-out .cell i{
+    transform: translateY(-110%);
+    opacity: 0;
+}
+
+/* 라벨도 문구와 같은 타이밍으로 여닫는다 */
+.sc-intro .eyebrow{
+    opacity: 0;
+    transition: opacity var(--cell-dur, 700ms) ease;
+}
+.sc-intro .intro-inner.is-in .eyebrow{
+    opacity: 1;
+}
+.sc-intro .intro-inner.is-above .eyebrow{
+    opacity: 0;
+}
+
+.sc-intro .scroll-hint{
+    margin-top: 60px;
+    font-size: 11px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: rgba(var(--color-light-rgb), 0.35);
+}
+
+
+.sc-projects{
+
+    position: relative;
+    padding: 115px 0;
+    z-index: 5;
+  
+}
+.sc-projects .desc-area{
+    display: flex;
+    flex-direction: column;
+}
+.sc-projects .desc-area .title{
+    font-weight: 400;
+    font-style: normal;
+    font-size: calc(var(--title-size)* 0.45);
+    line-height: 1.66;
+    color: #888;
+    margin-bottom: 30px;
+}
+
+/* 단어 단위 리빌 - 마스크 안에서 비스듬히 올라온다 */
+.sc-projects .desc-area .title .w-mask{
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+    padding-bottom: 0.14em;
+    margin-bottom: -0.14em;
+}
+.sc-projects .desc-area .title .w-in{
+    display: inline-block;
+    will-change: transform;
+}
+.sc-projects .desc-area .desc{
+    font-size: calc(var(--title-size)* 0.25);
+    line-height: 1.2;
+}
+/* 탭 - 아래 슬라이더가 1px 흰 격자로 그려지는 3D 씬이라
+   탭도 같은 언어(헤어라인 + 넓은 자간 라벨)로 맞춘다 */
+.btn-area{
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin: 40px 0 46px;
+    border-bottom: 1px solid rgba(var(--color-light-rgb), 0.14);
+}
+
+.btn-wrap + .btn-wrap{
+    margin-left: 52px;
+}
+
+.btn-tab {
+    position: relative;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 9px;
+    width: auto;
+    height: auto;
+    padding: 0 2px 20px;
+    border: 0;
+    border-radius: 0;
+    background-color: transparent;
+    /* 흰색 투명도만으로 단계를 만든다. 색을 더 쓰면 금방 산만해진다 */
+    color: rgba(var(--color-light-rgb), 0.4);
+    cursor: pointer;
+    transition: color var(--animation-smooth);
+}
+
+.btn-tab .title{
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+}
+
+/* 개수는 목차 번호처럼 위첨자로 붙인다 */
+.btn-tab .count{
+    position: relative;
+    top: -0.62em;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: .08em;
+    font-variant-numeric: tabular-nums;
+    color: inherit;
+    opacity: .65;
+}
+
+.btn-tab:hover{
+    color: rgba(var(--color-light-rgb), 0.75);
+}
+.btn-tab.active{
+    color: var(--color-light);
+}
+
+/* 선택 표시는 헤어라인 위에 겹치는 1px 선 */
+.btn-tab .fill {
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-light);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform .55s cubic-bezier(.16, 1, .3, 1);
+}
+.btn-tab.active .fill{
+    transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce){
+    .btn-tab .fill{ transition: none; }
+}
+
+
+
+
+.sc-projects .slider{
+    position: relative;
+    /* 카드가 화면 양 끝까지 흘러야 하므로 inner 좌우 패딩만큼 밖으로 뺀다 */
+    margin-left: -60px;
+    margin-right: -60px;
+    height: min(72vh, 620px);
+    margin-bottom: 90px;
+    overflow: hidden;
+    cursor: grab;
+    touch-action: pan-y;
+}
+
+/* 바닥판이 sc-about 바로 위까지 끊김 없이 이어져야 해서 아래 여백을 슬라이더가 먹는다 */
+.sc-projects.is-gl{
+    padding-bottom: 0;
+}
+.sc-projects.is-gl .slider{
+    margin-bottom: 0;
+}
+
+/* 휘어진 썸네일을 그리는 WebGL 캔버스. 링크는 위에 얹힌 DOM이 받는다 */
+.sc-projects .slider-canvas{
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+.sc-projects .slider:focus-visible{
+    outline: 1px solid var(--color-primary);
+    outline-offset: -1px;
+}
+.sc-projects .slider.grabbing{
+    cursor: grabbing;
+}
+.sc-projects .slider.grabbing .content-item{
+    user-select: none;
+}
+.sc-projects .slider.hidden{
+    display: none;
+}
+
+.sc-projects .content-list{
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+/* 위치·크기는 WebGL 카드의 투영 결과에 맞춰 JS가 매 프레임 지정한다 */
+.sc-projects .content-item{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(33.333vw - 20px);
+    display: flex;
+    flex-direction: column;
+    will-change: transform;
+}
+
+/* 노출 장수: 1024 이상은 3장, 768에서 1.5장.
+   구간을 뷰포트 폭의 1차식으로 이어 붙여 경계에서 폭이 튀지 않는다.
+   카드 폭 = 화면폭 / 장수 - 간격(20px) */
+@media (max-width: 1024px){
+    .sc-projects .content-item{
+        width: calc(1004px - 66.667vw);
+    }
+    /* 화면이 좁아지면 12vw 는 제목이 화면을 다 먹는다 */
+    .sc-intro .title-line{
+        font-size: 8vw;
+    }
+    .sc-intro .station{
+        font-size: 7vw;
+    }
+    .sc-intro .outro-line{
+        font-size: 7vw;
+    }
+    /* 좁은 화면에서는 프로젝트 섹션이 뷰포트보다 조금밖에 안 커서
+       핀이 걸리자마자 sc-about 이 덮어버린다. 어바웃을 아래로 밀어
+       핀에 머무는 구간을 늘린다. 그 여백은 핀 때문에 화면에 안 보인다 */
+    .sc-about{
+        margin-top: 45vh;
+    }
+}
+@media (max-width: 768px){
+    .sc-projects .content-item{
+        width: calc(66.667vw - 20px);
+    }
+}
+
+/* 썸네일은 WebGL이 그린다. DOM 쪽은 투명하게 두되 링크 클릭 영역으로 남긴다 */
+.sc-projects.is-gl .thumb-area{
+    opacity: 0;
+}
+
+/* 캡션은 참고 사이트처럼 카드 안쪽 좌하단에 얹는다 */
+.sc-projects.is-gl .info-area{
+    position: absolute;
+    left: calc(var(--card-w, 620px) * 0.06);
+    right: calc(var(--card-w, 620px) * 0.06);
+    bottom: calc(var(--card-w, 620px) * 0.045);
+    padding-top: 0;
+    text-shadow: 0 1px 12px rgba(0, 0, 0, 0.65);
+}
+
+/* 섹션이 보이고 카드가 자리를 잡으면 캡션이 아래에서 올라온다 */
+.sc-projects.is-gl .info-area{
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .55s ease-out, transform .85s cubic-bezier(.16, 1, .3, 1);
+    /* 왼쪽 카드부터 차례로 올라오도록 JS가 카드마다 넣는다 */
+    transition-delay: var(--reveal-delay, 0s);
+}
+.sc-projects.is-gl.is-ready .content-item.is-in .info-area{
+    opacity: 1;
+    transform: none;
+}
+@media (prefers-reduced-motion: reduce){
+    .sc-projects.is-gl .info-area{
+        transform: none;
+        transition: opacity .2s linear;
+    }
+}
+/* 캡션 크기는 카드 폭(--card-w, JS가 넣는다)에 비례해야
+   노출 장수가 바뀌어도 카드 대비 비율이 그대로다 */
+.sc-projects.is-gl .info-area .title{
+    font-size: clamp(15px, calc(var(--card-w, 620px) * 0.055), 30px);
+}
+.sc-projects.is-gl .link-site,
+.sc-projects.is-gl .link-velog{
+    padding: 2px calc(var(--card-w, 620px) * 0.028);
+    font-size: clamp(9px, calc(var(--card-w, 620px) * 0.026), 13px);
+}
+
+.sc-projects .thumb-empty{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 16/9;
+    padding: 20px;
+    text-align: center;
+    background-color: rgba(var(--color-light-rgb), 0.06);
+    border: 1px solid rgba(var(--color-light-rgb), 0.15);
+    color: rgba(var(--color-light-rgb), 0.45);
+    font-size: 14px;
+    letter-spacing: .08em;
+}
+
+
+.sc-projects .content-item .flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.sc-projects .content-item .link-wrap{
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    min-width: 0;
+}
+
+.sc-projects .content-item .link-site,
+.sc-projects .content-item .link-velog{
+   border: 1px solid var(--color-primary);
+   padding: 2px 25px;
+   border-radius: 20px;
+   backdrop-filter: blur(20px);
+    background-color: rgba(16, 18, 20, 0.25);
+    white-space: nowrap;
+}
+
+
+.sc-projects .thumb-area{
+    border-radius: 30px;
+    overflow: hidden;
+    transition: .3s ;
+}
+.sc-projects .content-item:hover .thumb-area{
+    border-radius: 50%;
+}
+.sc-projects .content-item:hover .thumb-area img{
+    transform: scale(1.2);
+    transition: 7s;
+}
+.sc-projects .content-item .thumb-area img{
+
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    transition: 1s ;
+
+}
+.sc-projects .content-item .thumb-area video{
+    /* max-width: 300px;
+    max-height: 300px; */
+    /* border-radius: 4vh; */
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+}
+.sc-projects .content-item .info-area{
+    padding-top: 20px;
+}
+.sc-projects .content-item .info-area .title{
+    font-weight: 450;
+    font-size: calc(var(--title-size)* 0.25);
+    line-height: 1.2;
+}
+
+.sc-about{
+    position: relative;
+    z-index: 6;
+    padding-top: 120px;
+    padding-bottom: 120px;
+    background: #e0e0df;
+    border-radius: 4vh;
+    color: var(--color-dark);
+}
+.sc-about .headline{
+    font-size: calc(var(--title-size)* 0.45);
+    line-height: 1.5;
+  padding-bottom: 50px;
+}
+
+.sc-about .about-group{
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 40px;
+    padding: 50px 0;
+    border-top: 1px solid var(--color-border);
+}
+.sc-about .group-title{
+    position: sticky;
+    top: 120px;
+    align-self: start;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(var(--color-dark-rgb), 0.45);
+}
+
+.sc-about .career-item + .career-item{
+    margin-top: 40px;
+}
+.sc-about .career-head{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.sc-about .career-head + .sub{
+    margin-top: 24px;
+}
+/* sc-about 은 바탕이 밝아서 연두 원색은 글자가 안 읽힌다. 짙은 쪽을 쓴다 */
+.sc-about .period{
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--color-primary-dark);
+}
+.sc-about .company{
+    font-size: calc(var(--title-size)* 0.28);
+    font-weight: 500;
+    line-height: 1.2;
+}
+.sc-about .company-sub{
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--color-gray);
+}
+.sc-about .role{
+    font-size: 16px;
+    color: var(--color-text);
+}
+
+.sc-about .sub{
+    flex: 1;
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+}
+.sc-about .sub-item{
+    position: relative;
+    padding-left: 15px;
+    line-height: 1.6;
+}
+.sc-about .sub-item::before{
+    position: absolute;
+    top: -4px;left: 0;
+    content: '•';
+    color: var(--color-primary-dark);
+    font-size: 20px;
+}
+
+.sc-about .skill-list{
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+.sc-about .skill-item{
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 20px;
+    align-items: baseline;
+}
+.sc-about .skill-name{
+    font-size: 16px;
+    font-weight: 500;
+}
+.sc-about .skill-tags{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.sc-about .skill-tags li{
+    padding: 5px 16px;
+    border: 1px solid var(--color-border);
+    border-radius: 30px;
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+ .bottom-marquee{
+    overflow: hidden;
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    background: var(--color-primary);
+    position: relative;
+    z-index: 6;
+    display: flex;
+    width: max-content;
+    animation: marquee 60s infinite linear;
+    margin: 100px 0;
+    
+ 
+   
+ }
+.bottom-marquee .marq-list{
+    display: flex;
+ }
+.bottom-marquee .marq-item{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    
+ }
+.bottom-marquee .marq-item svg{
+    transform: rotate(90deg) scaleY(1);
+    display: flex;align-items: center;
+    width: 50px;
+    height: 50px;
+ 
+ }
+.bottom-marquee .title{
+    white-space: nowrap;
+    text-transform: uppercase;
+  color: #000;
+    padding: 0.5em 0;
+    margin-left: 0.5em;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    font-size: calc(var(--title-size) * 0.45);
+    line-height: 1.2;
+    font-weight: 500;
+ }
+ 
+ 
+ @keyframes marquee {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+ }
+
+ .m{
+    display: none;
+ }
+
+
+
+
+        /* 1040이하~ 768px [1024px] */
+        @media (max-width:1040px) {
+            
+            .sc-card .headline {
+                font-size: calc(var(--title-size)* 0.9);
+               
+            }
+            
+            .sc-news  .link-wrap{
+                margin: 40px 0 50px;
+               position: static;
+             
+            }
+            .sc-news .link-more{
+            
+             border-radius: 30px;
+              width: 100%;
+              padding: 10px 10px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+                
+        }
+      
+        .sc-news .news-item a{
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sc-projects .slider{
+            margin-left: -40px;
+            margin-right: -40px;
+        }
+
+        }
+   
+        @media (max-width:930px) {
+            .sc-about .about-group{
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .sc-about .group-title{
+                position: static;
+            }
+            .sc-projects .link-wrap{
+                display: flex;
+                gap: 5px;
+                flex-direction: column;
+                text-align: center;
+            }
+    }
+
+
+        /* 767px ~ 320px  [320px]*/
+        @media (max-width:750px) {
+           .m{
+            display: block;
+           }
+
+            .group-text{
+                padding-top: 0;
+             }
+             .group-text .desc{
+             font-size: 13vw;
+             }
+             .sc-projects{
+                padding: 64px 0;
+               
+            }
+            .sc-projects .desc-area .desc{
+                margin-bottom: 50px;
+            }
+            
+            .sc-projects .desc-area .title{
+                font-size: calc(var(--title-size)* 0.35);
+            }
+            .sc-projects .desc-area .desc{
+                font-size: calc(var(--title-size)* 0.3);
+            }
+            .sc-projects .slider{
+                height: min(60vh, 460px);
+                margin-left: -20px;
+                margin-right: -20px;
+            }
+
+            /* 좁은 화면에서는 좌측 정렬이 desc 문단과 결이 맞는다 */
+            .btn-area{
+                justify-content: flex-start;
+                margin: 30px 0 34px;
+            }
+            .btn-wrap + .btn-wrap{
+                margin-left: 32px;
+            }
+            .btn-tab{
+                padding-bottom: 14px;
+                gap: 7px;
+            }
+            .btn-tab .title{
+                font-size: 13px;
+                letter-spacing: .14em;
+            }
+
+            .sc-projects .content-item .info-area .title {
+                font-weight: 450;
+                font-size: calc(var(--title-size)* 0.24);
+                line-height: 1.2;
+            }
+            .sc-projects .content-item:hover .thumb-area {
+                border-radius: 30px; 
+            }
+            
+            .sc-projects .content-item:hover .thumb-area img {
+                transform: none; 
+                transition: none; 
+            }
+            /* 제목이 두 줄이라 22vw 로는 화면을 넘긴다. <br> 로 끊은 줄은
+               그대로 두고 폭이 모자랄 때만 JS 가 더 줄인다 */
+            .sc-intro .title-line{
+                font-size: 12vw;
+            }
+            .sc-intro .copy{
+                font-size: 14px;
+            }
+            .sc-about{
+                padding-top: 64px;
+                padding-bottom: 64px;
+            }
+            .sc-about .about-group{
+                padding: 36px 0;
+            }
+            .sc-about .company{
+                font-size: calc(var(--title-size)* 0.35);
+            }
+            .sc-about .skill-item{
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            .sc-about .skill-tags li{
+                font-size: 14px;
+                padding: 4px 13px;
+            }
+                  
+        
+        }
